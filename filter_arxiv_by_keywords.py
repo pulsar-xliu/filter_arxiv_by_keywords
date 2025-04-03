@@ -6,7 +6,10 @@ import os
 from bs4 import BeautifulSoup
 
 # Define keywords
-keywords = ["neutron star", "black hole", "magnetar", "fast radio burst"]
+keywords = ["pulsar", "neutron star", "black hole", "magnetar", "fast radio burst", "gravitational wave", "radio telescope"]
+sub_keywords = ["pulsars", "neutron stars", "black holes", "magnetars", "fast radio bursts", "gravitational waves", "radio telescopes"]
+minor_keywords = ["large language model", "machine learning", "deep learning", "X-ray binary", "MeerKAT", "SKA", "LMXB", "NS", "BH", "GW", "FRB"]
+all_keywords = keywords + sub_keywords + minor_keywords
 
 # Define website to be read 
 link = "https://arxiv.org/list/astro-ph/new"
@@ -40,7 +43,7 @@ f.write("</head><body>\n")
 
 match_count = 1
 for i in range(len(lines_abstracts)):
-    if any(word in lines_abstracts[i] for word in keywords):
+    if any(word in lines_abstracts[i] for word in all_keywords):
         title = lines_titles[i].encode('ascii', 'ignore').decode('ascii')
         author = lines_authors[i].encode('ascii', 'ignore').decode('ascii')
         abstract = lines_abstracts[i].encode('ascii', 'ignore').decode('ascii')
