@@ -2,16 +2,15 @@
 A python script to filter the newest arXiv papers based on keywords and categories.
 
 ## Usage
-After downloading the script, you need to change the lines below:
+After downloading the script,
 
-1. Line 9 to specify your own keywords
-2. Line 12 to specify your own categories
-3. To run the script, simply execute in the terminal:
+1. Change Line 9 to specify your keywords
+2. Edit Line 12 to specify your category
+3. Run the script in the terminal as below:
 ```
-        python filter_arxiv_by_keywords.py
+    python filter_arxiv_by_keywords.py
 ```
-
-4. The results will be saved as an HTML file in a folder named as your category. Open the HTML file with a web browser to see the results.
+4. Results will be saved as an HTML file in a folder named as your category. View the results with a web browser.
 
 ## Example Output
 ![Effects of the script](https://github.com/pulsar-xliu/filter_arxiv_by_keywords/blob/main/example_output.png)
