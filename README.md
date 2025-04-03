@@ -10,7 +10,7 @@ After downloading the script,
 ```
     python filter_arxiv_by_keywords.py
 ```
-4. Results will be saved as an HTML file in a folder named as your category. View the results with a web browser.
+4. Results are saved in {category}/{date}.html. View the results with a web browser.
 
 ## Example Output
 ![Effects of the script](https://github.com/pulsar-xliu/filter_arxiv_by_keywords/blob/main/example_output.png)
