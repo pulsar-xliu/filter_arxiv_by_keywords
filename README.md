@@ -1,5 +1,5 @@
 
-A python script to filter the newest arXiv papers based on keywords and categories.
+**A python script to filter the newest arXiv papers based on keywords and categories**
 
 ## Usage
 After downloading the script,
@@ -10,7 +10,7 @@ After downloading the script,
 ```
     python filter_arxiv_by_keywords.py
 ```
-4. Results are saved in {category}/{date}.html. View the results with a web browser.
+4. Results are saved in *category/date.html*. View the results with a web browser.
 
 ## Example Output
 ![Effects of the script](https://github.com/pulsar-xliu/filter_arxiv_by_keywords/blob/main/example_output.png)
