@@ -4,8 +4,8 @@ A python script to filter the newest arXiv papers based on keywords and categori
 ## Usage
 After downloading the script,
 
-1. Change Line 9 to specify your keywords
-2. Edit Line 12 to specify your category
+1. Edit Lines 9-11 to specify your keywords
+2. Edit Line 15 `link = ` to specify your category
 3. Run the script in the terminal as below:
 ```
     python filter_arxiv_by_keywords.py
