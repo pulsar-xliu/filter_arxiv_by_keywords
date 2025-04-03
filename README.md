@@ -1,5 +1,5 @@
 
-**A python script to filter the newest arXiv papers based on keywords and categories**
+A python script to filter the newest arXiv papers based on keywords and categories.
 
 ## Usage
 After downloading the script,
