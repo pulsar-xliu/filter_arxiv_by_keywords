@@ -2,9 +2,9 @@
 A python script to filter the newest arXiv papers based on keywords and categories. 
 
 ## Motivation
-Hundereds of papers are published every day on arXiv. It is difficult to keep track of the latest papers on a specific topic. This script aims to automate the process of filtering the latest papers based on keywords and categories. Some existing filtering tools, e.g. [PulsarAstronomy.net](https://www.pulsarastronomy.net/pulsar/), but the user cannot customize the filtering criteria. 
+Hundereds of papers are published every day on arXiv, making it is to keep track of the latest papers on a specific topic. Some tools, e.g. [PulsarAstronomy.net](https://www.pulsarastronomy.net/pulsar/), can filter papers in a specific category, but users cannot customize by their own preferences. 
 
-Attracting feautures of this script include:
+This script automates the process of filtering the latest papers based on keywords and categories. Attracting feautures include:
 - Flexibility to customize filtering keywords and categories.
 - Reporting results as arXiv-like webpage for easy viewing.
 
