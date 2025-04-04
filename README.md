@@ -19,6 +19,11 @@ After downloading the script,
 ```
 4. Results are saved in `category/date.html`. View the results with a web browser.
 
+5. Advanced usage. Linux users can automate the filting with `crontab -e` on a daily basis. For example, to retrive latest papers at 7am every day, input the following line in the crontab file:
+```
+   00 07 * * * python /path/to/filter_arxiv_by_keywords.py
+```
+
 ## Example Output
 ![Effects of the script](https://github.com/pulsar-xliu/filter_arxiv_by_keywords/blob/main/example_output.png)
 
