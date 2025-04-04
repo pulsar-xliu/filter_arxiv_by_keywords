@@ -1,21 +1,21 @@
 
-A python script to filter the latest arXiv papers based on keywords and topics. 
+==Filarkey==: **Fil**tering latest **ar**Xiv papers by **key**words and topics
 
-## Motivation
-Hundereds of papers are published every day on arXiv, making it difficult to keep track of the latest papers on a specific topic. Some tools, e.g. [PulsarAstronomy.net](https://www.pulsarastronomy.net/pulsar/), can filter papers in a specific topic, but users cannot customize by their own preferences. 
+### Features
+Hundereds of papers are published on arXiv every day, making it difficult to keep track of the latest publications. Some tools, e.g. [PulsarAstronomy.net](https://www.pulsarastronomy.net/pulsar/),  filter papers in a specific topic, but users cannot customize by their own preferences. 
 
-This script automates the process of filtering based on keywords and topics. Notable feautures include
-- Flexibility. Users can customize filtering keywords and topics.
-- Easy viewing. Results are reported in a arXiv-like webpage.
+This script automates filtering using keywords and topics. Notable feautures include
+- Flexibility. Set your own filtering keywords and topics.
+- Convenience. Results are reported in arXiv-style webpage.
 
-## Usage
+### Usage
 After downloading the script,
 
-1. Set your arXiv topic in Line 10 (`link = `).
+1. Set your arXiv topic in Line 10 after `link`.
 2. Specify keywords for filtering in Lines 14-16.
 3. Run the script in a terminal as below:
 ```
-    python filter_arxiv_by_keywords.py
+    python filarkey.py
 ```
 4. Results are saved in `topic/date.html`. View the results with a web browser.
 
@@ -24,8 +24,8 @@ After downloading the script,
    00 07 * * * python /path/to/filter_arxiv_by_keywords.py
 ```
 
-## Example Output
+### Sample output
 ![Effects of the script](https://github.com/pulsar-xliu/filter_arxiv_by_keywords/blob/main/example_output.png)
 
-## Reference
+### Reference
 A similar script from [Errea Lab](https://cfm.ehu.es/errealab/blog/python-script-to-filter-the-arxiv-and-get-an-email-daily/) saved filtered results as a text file and alerted users by email.
