@@ -28,4 +28,4 @@ After downloading the script,
 ![Effects of the script](https://github.com/pulsar-xliu/filter_arxiv_by_keywords/blob/main/example_output.png)
 
 ## Acknowledgements
-This script is an adaption based on the work of [Errea Lab](https://cfm.ehu.es/errealab/blog/python-script-to-filter-the-arxiv-and-get-an-email-daily/), which saved the results as a text file and emailed it to a user.
+This script is adapted based on the work of [Errea Lab](https://cfm.ehu.es/errealab/blog/python-script-to-filter-the-arxiv-and-get-an-email-daily/), which saved the results as a text file and emailed it to a user.
