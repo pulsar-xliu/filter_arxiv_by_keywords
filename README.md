@@ -1,5 +1,5 @@
 
-==Filarkey==: **Fil**tering latest **ar**Xiv papers by **key**words and topics
+**Filarkey**: **Fil**tering latest **ar**Xiv papers by **key**words and topics
 
 ### Features
 Hundereds of papers are published on arXiv every day, making it difficult to keep track of the latest publications. Some tools, e.g. [PulsarAstronomy.net](https://www.pulsarastronomy.net/pulsar/),  filter papers in a specific topic, but users cannot customize by their own preferences. 
