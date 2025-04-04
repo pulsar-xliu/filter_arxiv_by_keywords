@@ -6,7 +6,7 @@ Hundereds of papers are published every day on arXiv. It is difficult to keep tr
 
 Attracting feautures of this script include:
 - Flexibility to set filtering keywords and categories.
-- Reader-friendly webpage for easy viewing.
+- Reporting results as arXiv-like webpage for easy viewing.
 
 ## Usage
 After downloading the script,
