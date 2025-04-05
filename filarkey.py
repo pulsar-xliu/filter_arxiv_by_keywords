@@ -18,8 +18,9 @@ report_path = os.path.join(base_path, topic)
 # Use all_keywords for filtering. Report major_keyword only.
 major_keyword  = ["pulsar", "neutron star", "black hole", "magnetar", "fast radio burst", "gravitational wave", "radio telescope"]
 major_keywords = ["pulsars", "neutron stars", "black holes", "magnetars", "fast radio bursts", "gravitational waves", "radio telescopes"]
-minor_keywords = ["large language model", "machine learning", "deep learning", "X-ray binary", "globular cluster", "MeerKAT", "SKA", "LMXB", "NS", "BH", "GW", "FRB"]
-all_keywords = major_keyword + major_keywords + minor_keywords
+minor_keywords = ["large language model", "machine learning", "deep learning", "X-ray binary", "globular cluster"]
+short_keywords = ["MeerKAT", "SKA", "LMXB", "NS", "BH", "GW", "FRB"]
+all_keywords = major_keyword + major_keywords + minor_keywords + short_keywords
 
 def filter_papers(link):
     """Access the website and extract paper information."""
