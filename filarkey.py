@@ -87,11 +87,11 @@ def write_html(filename, date, all_keywords, major_keyword, lines_titles, lines_
                 
                 # Write the information of the matched papers
                 f.write(f"<strong>[{match_count}] <a href='{html_url}' style='text-decoration: none;'>arXiv:{ref.split('/')[-1]}</a> [<a href='{html_url}' style='text-decoration: none;'>html</a></strong>, <strong><a href='{pdf_url}' style='text-decoration: none;'>pdf</a>]</strong><br>")
-                f.write(f"<strong style='padding-left: 40px; font-size: 1.4em;'>{title_clean}</strong></br>\n")
-                f.write(f"<span style='padding-left: 40px; display: block; color: blue;  word-wrap: break-word;'>{author}</span>\n")
+                f.write(f"<strong style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 1.4em;'>{title_clean}</strong>\n")
+                f.write(f"<span style='padding-left: 40px; display: block; color: blue; word-wrap: break-word;'>{author}</span>\n")
                 
                 if first_subject:
-                    f.write(f"<span style='padding-left: 40px;'>Subject: <strong>{first_subject}</strong>")
+                    f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word;'>Subject: <strong>{first_subject}</strong>")
                     if other_subjects:
                         f.write(f"; {other_subjects}")
                     f.write("</span>\n")
