@@ -9,6 +9,11 @@ from bs4 import BeautifulSoup
 # Define website to be read 
 link = "https://arxiv.org/list/astro-ph/new"
 
+# Set report path
+base_path = '/home/xliu/work'
+topic = link.split('/')[-2]
+report_path = os.path.join(base_path, topic) 
+
 # Define keywords. 
 # Use all_keywords for filtering. Report major_keyword only.
 major_keyword  = ["pulsar", "neutron star", "black hole", "magnetar", "fast radio burst", "gravitational wave", "radio telescope"]
@@ -36,16 +41,15 @@ def filter_papers(link):
     print(f"\tPapers extracted.")
     return lines_titles, lines_abstracts, lines_authors, lines_refs
 
-def set_filename(link):
+def set_filename(report_path, topic):
     """Create a filename to save the filtered papers."""
     date = datetime.datetime.now().strftime("%Y-%m-%d-%a")
     date_time = datetime.datetime.now().strftime("%Y-%m-%d-%a_%H:%M:%S")
-    paper_type = link.split('/')[-2]
-    os.makedirs(f"./{paper_type}", exist_ok=True)
-    filename = f"./{paper_type}/astro-ph_new_{date}.html"
+    os.makedirs(f"{report_path}", exist_ok=True)
+    filename = os.path.join(report_path, f"{topic}_new_{date}.html")
     if os.path.exists(filename):
         print(f"\n\tWarning: File exists", colored(f"{filename.split('/')[-1]}", "yellow"))
-        temp_filename = f"./{paper_type}/astro-ph_new_{date_time}.html"
+        temp_filename = os.path.join(report_path, f"{topic}_new_{date_time}.html")
     else:
         temp_filename = filename
     return filename, temp_filename, date
@@ -99,7 +103,7 @@ def check_duplications(filename, temp_filename):
 
 def main():
     paper_info = filter_papers(link)
-    filename, temp_filename, date = set_filename(link)
+    filename, temp_filename, date = set_filename(report_path, topic)
     write_html(temp_filename, date, all_keywords, major_keyword, *paper_info)
     check_duplications(filename, temp_filename)
 
