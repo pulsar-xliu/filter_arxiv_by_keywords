@@ -26,7 +26,7 @@ After downloading the script,
 ```
 
 ### Sample output
-![Effects of the script](https://github.com/pulsar-xliu/filter_arxiv_by_keywords/blob/main/example_output.png)
+![Effects of the script](https://github.com/pulsar-xliu/filter_arxiv_by_keywords/blob/main/example.png)
 
 ### Reference
 - A similar script from [Errea Lab](https://cfm.ehu.es/errealab/blog/python-script-to-filter-the-arxiv-and-get-an-email-daily/) saves filtered results as a text file and alerts users by email.
