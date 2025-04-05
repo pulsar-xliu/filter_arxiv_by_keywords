@@ -38,8 +38,8 @@ def filter_papers(link):
 
 def set_filename(link):
     """Create a filename to save the filtered papers."""
-    date = datetime.datetime.now().strftime("%Y-%m-%d")
-    date_time = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    date = datetime.datetime.now().strftime("%Y-%m-%d-%a")
+    date_time = datetime.datetime.now().strftime("%Y-%m-%d-%a_%H:%M:%S")
     paper_type = link.split('/')[-2]
     os.makedirs(f"./{paper_type}", exist_ok=True)
     filename = f"./{paper_type}/astro-ph_new_{date}.html"
