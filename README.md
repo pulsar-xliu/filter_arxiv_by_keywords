@@ -2,11 +2,13 @@
 **Filarkey**: **Fil**tering latest **ar**Xiv papers by **key**words and topics
 
 ### Features
-Hundereds of papers are published on arXiv every day, making it difficult to keep track of the latest publications. Some tools, e.g. [PulsarAstronomy.net](https://www.pulsarastronomy.net/pulsar/),  filter papers in a specific topic, but users cannot customize by their own preferences. 
+Everyday 100+ papers are published on arXiv. Picking out the papers of interest is time-consuming.
+This script filters the latest papers using keywords and topics. 
 
-This script automates filtering using keywords and topics. Notable feautures include
-- Flexibility. Set your own filtering keywords and topics.
-- Convenience. Results are reported in arXiv-style webpage.
+Notable feautures include
+- Friendly: Report results in webpage following arXiv style. Easy to read and navigate.
+- Flexible: Set filtering keywords and topics based on your interests.
+- Fast: Filter 100+ papers to a smaller number in a few seconds.
 
 ### Usage
 After downloading the script,
@@ -28,4 +30,5 @@ After downloading the script,
 ![Effects of the script](https://github.com/pulsar-xliu/filter_arxiv_by_keywords/blob/main/example_output.png)
 
 ### Reference
-A similar script from [Errea Lab](https://cfm.ehu.es/errealab/blog/python-script-to-filter-the-arxiv-and-get-an-email-daily/) saved filtered results as a text file and alerted users by email.
+- A similar script from [Errea Lab](https://cfm.ehu.es/errealab/blog/python-script-to-filter-the-arxiv-and-get-an-email-daily/) saves filtered results as a text file and alerts users by email.
+- A website on [PulsarAstronomy.net](https://www.pulsarastronomy.net/pulsar/) filters papers related to pulsar astronomy.
