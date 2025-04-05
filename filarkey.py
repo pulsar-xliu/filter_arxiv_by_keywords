@@ -79,7 +79,7 @@ def write_html(filename, date, all_keywords, major_keyword, lines_titles, lines_
                 pdf_url = html_url.replace('abs', 'pdf')
                 
                 # Write the information of the matched papers
-                f.write(f"<strong>[{match_count}] arXiv:{ref.split('/')[-1]} [<a href='{html_url}' style='text-decoration: none;'>html</a></strong>, <strong><a href='{pdf_url}' style='text-decoration: none;'>pdf</a>]</strong><br>")
+                f.write(f"<strong>[{match_count}] <a href='{html_url}' style='text-decoration: none;'>arXiv:{ref.split('/')[-1]}</a> [<a href='{html_url}' style='text-decoration: none;'>html</a></strong>, <strong><a href='{pdf_url}' style='text-decoration: none;'>pdf</a>]</strong><br>")
                 f.write(f"<strong style='padding-left: 40px; font-size: 1.4em;'>{title_clean}</strong></br>\n")
                 f.write(f"<span style='padding-left: 40px; color: blue;'>{author}</span>\n")
                 f.write(f"<p style='padding-left: 40px;'>{abstract}</p>\n")
@@ -100,7 +100,7 @@ def check_duplications(filename, temp_filename):
                 print(colored(f"\tWarning: No new papers found.\n", "yellow"))
                 os.remove(temp_filename)
             else:
-                print(f"\tNew papers found. Saving as", colored(f"{filename.split('/')[-1]}\n", 'magenta'))
+                print(f"\tNew papers found. Saving as", colored(f"{temp_filename.split('/')[-1]}\n", 'magenta'))
 
 def main():
     paper_info = filter_papers(link)
