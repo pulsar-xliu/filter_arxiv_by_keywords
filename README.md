@@ -6,9 +6,9 @@ Everyday 100+ papers are published on arXiv. Picking out the papers of interest 
 This script filters the latest papers using keywords and topics. 
 
 Notable feautures include
-- Friendly: Report results in webpage following arXiv style. Easy to read and navigate.
-- Flexible: Set filtering keywords and topics based on your interests.
-- Fast: Filter 100+ papers to a smaller number in a few seconds.
+- **Friendly**: Report results in webpage following arXiv style. Easy to read and navigate.
+- **Flexible**: Set filtering keywords and topics based on your interests.
+- **Fast**: Filter 100+ papers to a smaller number in a few seconds.
 
 ### Usage
 After downloading the script,
