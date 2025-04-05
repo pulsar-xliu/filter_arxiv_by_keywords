@@ -41,8 +41,41 @@ def filter_papers(link):
     lines_subjects = [subject.get_text() for subject in subjects]
     lines_refs = [ref.get_text() for ref in refs]
 
+    lines_comments = get_comments(soup)
+
     print(f"\tPapers extracted.")
-    return lines_titles, lines_abstracts, lines_authors, lines_subjects, lines_refs
+    return lines_titles, lines_abstracts, lines_authors, lines_subjects, lines_refs, lines_comments
+
+def get_comments(page_content):
+    """Extract comments from the page. Use 'No comments' if not found."""
+    papers = page_content.find_all('a', {'name': lambda x: x and x.startswith('item')})
+    lines_comments = []
+
+    for i in range(len(papers)):
+        current_anchor = papers[i]
+        next_anchor = papers[i+1] if i+1 < len(papers) else None
+        
+        # Find all elements between current_anchor and next_anchor
+        elements_between = []
+        elem = current_anchor.find_next()
+        while elem and elem != next_anchor:
+            elements_between.append(elem)
+            elem = elem.find_next()
+        
+        # Check for list-comments within this section
+        comments_tag = None
+        for elem in elements_between:
+            if elem.name == 'div' and 'class' in elem.attrs and 'list-comments' in elem.attrs['class']:
+                comments_tag = elem
+                break
+        
+        if comments_tag:
+            comments = comments_tag.text.strip().replace('Comments: ', '')
+        else:
+            comments = 'Comments:\n No comments'
+        
+        lines_comments.append(comments)   
+    return lines_comments
 
 def set_filename(report_path, topic):
     """Create a filename to save the filtered papers."""
@@ -57,7 +90,7 @@ def set_filename(report_path, topic):
         temp_filename = filename
     return filename, temp_filename, date
 
-def write_html(filename, date, all_keywords, major_keyword, lines_titles, lines_abstracts, lines_authors, lines_subjects, lines_refs):
+def write_html(filename, date, all_keywords, major_keyword, lines_titles, lines_abstracts, lines_authors, lines_subjects, lines_refs, lines_comments):
     """Filter the papers by keywords and save as an HTML file."""
     with open(filename, 'w') as f:
         # Write a header to render LaTeX equations
@@ -74,6 +107,7 @@ def write_html(filename, date, all_keywords, major_keyword, lines_titles, lines_
                 title = lines_titles[i].encode('ascii', 'ignore').decode('ascii')
                 author = lines_authors[i].encode('ascii', 'ignore').decode('ascii')
                 abstract = lines_abstracts[i].encode('ascii', 'ignore').decode('ascii')
+                comments = lines_comments[i].encode('ascii', 'ignore').decode('ascii')
                 subject = lines_subjects[i].encode('ascii', 'ignore').decode('ascii')
                 ref = lines_refs[i].encode('ascii', 'ignore').decode('ascii').replace('arXiv:', 'abs/')
 
@@ -89,6 +123,7 @@ def write_html(filename, date, all_keywords, major_keyword, lines_titles, lines_
                 f.write(f"<strong>[{match_count}] <a href='{html_url}' style='text-decoration: none;'>arXiv:{ref.split('/')[-1]}</a> [<a href='{html_url}' style='text-decoration: none;'>html</a></strong>, <strong><a href='{pdf_url}' style='text-decoration: none;'>pdf</a>]</strong><br>")
                 f.write(f"<strong style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 1.4em;'>{title_clean}</strong>\n")
                 f.write(f"<span style='padding-left: 40px; display: block; color: blue; word-wrap: break-word;'>{author}</span>\n")
+                f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word;'>{comments}</span>\n")
                 
                 if first_subject:
                     f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word;'>Subject: <strong>{first_subject}</strong>")
