@@ -21,7 +21,7 @@ After downloading the script,
 
 5. Advanced usage. Linux users can automate the filtering with `crontab`. For example, to retrive latest papers at 7am every day, input `crontab -e` on terminal, and add the following line:
 ```
-   00 07 * * * python /path/to/filter_arxiv_by_keywords.py
+   00 07 * * * python /path/to/filarkey.py
 ```
 
 ### Sample output
