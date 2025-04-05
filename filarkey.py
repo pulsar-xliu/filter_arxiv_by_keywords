@@ -28,20 +28,16 @@ def filter_papers(link):
     page = requests.get(link)
     soup = BeautifulSoup(page.content, 'html.parser')
 
-    print(soup.prettify())
-
     # Extract information 
     titles = soup.find_all('div', {'class' : 'list-title mathjax'})
     abstracts = soup.find_all('p', {'class' : 'mathjax'})
     authors = soup.find_all('div', {'class' : 'list-authors'})
-    comments = soup.find_all('div', {'class' : 'list-comments'})
     subjects = soup.find_all('div', {'class' : 'list-subjects'})
     refs = soup.find_all('a', {'title' : 'Abstract'})
 
     lines_titles = [title.get_text() for title in titles]
     lines_abstracts = [abstract.get_text() for abstract in abstracts]
     lines_authors = [author.get_text() for author in authors]
-    lines_comments = [comment.get_text() if comment else 'Comments: No comments' for comment in comments]
     lines_subjects = [subject.get_text() for subject in subjects]
     lines_refs = [ref.get_text() for ref in refs]
 
