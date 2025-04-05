@@ -28,19 +28,25 @@ def filter_papers(link):
     page = requests.get(link)
     soup = BeautifulSoup(page.content, 'html.parser')
 
+    print(soup.prettify())
+
     # Extract information 
     titles = soup.find_all('div', {'class' : 'list-title mathjax'})
     abstracts = soup.find_all('p', {'class' : 'mathjax'})
     authors = soup.find_all('div', {'class' : 'list-authors'})
+    comments = soup.find_all('div', {'class' : 'list-comments'})
+    subjects = soup.find_all('div', {'class' : 'list-subjects'})
     refs = soup.find_all('a', {'title' : 'Abstract'})
 
     lines_titles = [title.get_text() for title in titles]
     lines_abstracts = [abstract.get_text() for abstract in abstracts]
     lines_authors = [author.get_text() for author in authors]
+    lines_comments = [comment.get_text() if comment else 'Comments: No comments' for comment in comments]
+    lines_subjects = [subject.get_text() for subject in subjects]
     lines_refs = [ref.get_text() for ref in refs]
 
     print(f"\tPapers extracted.")
-    return lines_titles, lines_abstracts, lines_authors, lines_refs
+    return lines_titles, lines_abstracts, lines_authors, lines_subjects, lines_refs
 
 def set_filename(report_path, topic):
     """Create a filename to save the filtered papers."""
@@ -55,7 +61,7 @@ def set_filename(report_path, topic):
         temp_filename = filename
     return filename, temp_filename, date
 
-def write_html(filename, date, all_keywords, major_keyword, lines_titles, lines_abstracts, lines_authors, lines_refs):
+def write_html(filename, date, all_keywords, major_keyword, lines_titles, lines_abstracts, lines_authors, lines_subjects, lines_refs):
     """Filter the papers by keywords and save as an HTML file."""
     with open(filename, 'w') as f:
         # Write a header to render LaTeX equations
@@ -72,16 +78,28 @@ def write_html(filename, date, all_keywords, major_keyword, lines_titles, lines_
                 title = lines_titles[i].encode('ascii', 'ignore').decode('ascii')
                 author = lines_authors[i].encode('ascii', 'ignore').decode('ascii')
                 abstract = lines_abstracts[i].encode('ascii', 'ignore').decode('ascii')
+                subject = lines_subjects[i].encode('ascii', 'ignore').decode('ascii')
                 ref = lines_refs[i].encode('ascii', 'ignore').decode('ascii').replace('arXiv:', 'abs/')
 
                 title_clean = title.split('Title:')[-1].strip()
                 html_url = 'https://arxiv.org/' + ref.strip()
                 pdf_url = html_url.replace('abs', 'pdf')
                 
+                subjects_list = subject.split(';')
+                first_subject = subjects_list[0].split(':')[-1].strip() if subjects_list else ''
+                other_subjects = '; '.join(subjects_list[1:]).strip() if len(subjects_list) > 1 else ''
+                
                 # Write the information of the matched papers
                 f.write(f"<strong>[{match_count}] <a href='{html_url}' style='text-decoration: none;'>arXiv:{ref.split('/')[-1]}</a> [<a href='{html_url}' style='text-decoration: none;'>html</a></strong>, <strong><a href='{pdf_url}' style='text-decoration: none;'>pdf</a>]</strong><br>")
                 f.write(f"<strong style='padding-left: 40px; font-size: 1.4em;'>{title_clean}</strong></br>\n")
-                f.write(f"<span style='padding-left: 40px; color: blue;'>{author}</span>\n")
+                f.write(f"<span style='padding-left: 40px; display: block; color: blue;  word-wrap: break-word;'>{author}</span>\n")
+                
+                if first_subject:
+                    f.write(f"<span style='padding-left: 40px;'>Subject: <strong>{first_subject}</strong>")
+                    if other_subjects:
+                        f.write(f"; {other_subjects}")
+                    f.write("</span>\n")
+
                 f.write(f"<p style='padding-left: 40px;'>{abstract}</p>\n")
                 f.write(f"<br>\n")
                 match_count += 1
