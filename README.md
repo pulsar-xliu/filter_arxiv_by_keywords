@@ -13,12 +13,9 @@ Notable feautures include
 ### Usage
 After downloading the script,
 
-1. Set topic (line 10), report path (line 13) and keywords (lines 19-22).
-2. Run the script in a terminal as below:
-```
-    python filarkey.py
-```
-3. Results are saved in `{report_path}/topic/date.html`. Open with web browser.
+1. Set topic (`line 10`), report path (`line 13`) and keywords (`lines 19-22`).
+2. Run the script in a terminal as below: ```python filarkey.py```
+3. Results are saved in `report_path/topic/date.html`. Open with web browser.
 
 4. Advanced usage. Linux users can automate the filtering with `crontab`. For example, to retrive latest papers at 11 am on every workday, input `crontab -e` on terminal, and add the following line:
 ```
