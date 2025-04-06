@@ -1,6 +1,7 @@
 #!/usr/local/bin/python
 
 import os
+import sys
 import datetime
 import requests
 from termcolor import colored
@@ -13,6 +14,8 @@ link = "https://arxiv.org/list/astro-ph/new"
 base_path = '/home/xliu/work'
 topic = link.split('/')[-2]
 report_path = os.path.join(base_path, topic) 
+print("\n\tFiltering papers in latest arXiv releases")
+print(f"\n\tDefault report repository:", colored(f"{report_path}", "blue"))
 
 # Define keywords. 
 # Use all_keywords for filtering. Report major_keyword only.
@@ -22,11 +25,15 @@ minor_keywords = ["large language model", "machine learning", "deep learning", "
 short_keywords = ["MeerKAT", "SKA", "LMXB", "NS", "BH", "GW", "FRB"]
 all_keywords = major_keyword + major_keywords + minor_keywords + short_keywords
 
-def filter_papers(link):
+def filter_papers(link, report_path, topic):
     """Access the website and extract paper information."""
     print(f"\n\tAccessing", colored(f"{link}", 'blue'))
     page = requests.get(link)
     soup = BeautifulSoup(page.content, 'html.parser')
+
+    # get the date of latest release, check up to date.
+    date_str = get_posting_date(soup)
+    file_name = set_filename(report_path, topic, date_str)
 
     # Extract information 
     titles = soup.find_all('div', {'class' : 'list-title mathjax'})
@@ -44,7 +51,27 @@ def filter_papers(link):
     lines_comments = get_comments(soup)
 
     print(f"\tPapers extracted.")
-    return lines_titles, lines_abstracts, lines_authors, lines_subjects, lines_refs, lines_comments
+    return date_str, file_name, lines_titles, lines_abstracts, lines_authors, lines_subjects, lines_refs, lines_comments
+
+def get_posting_date(page_content):
+    """Extract the posting date from the page."""
+    date_element = page_content.find('h3', string=lambda t: t and "Showing new listings for" in t)
+    date_str = date_element.get_text(strip=True).replace('Showing new listings for ', '')
+    return date_str 
+
+def set_filename(report_path, topic, date_str):
+    """Create a filename to save the filtered papers."""
+    date_obj = datetime.datetime.strptime(date_str, '%A, %d %B %Y')
+    formatted_date = date_obj.strftime('%Y-%m-%d-') + date_obj.strftime('%a')
+    os.makedirs(f"{report_path}", exist_ok=True)
+    filename = os.path.join(report_path, f"{topic}_new_{formatted_date}.html")
+    if os.path.exists(filename):
+        print(colored(f"\n\tWarning: Reports up to date. Latest release at {formatted_date}.\n", "yellow"))
+        sys.exit()
+    else:
+        print(f"\n\tNew papers found.")
+        print("\tSaving reports to", colored(f"{filename.split('/')[-1]}\n", "magenta"))
+        return filename
 
 def get_comments(page_content):
     """Extract comments from the page. Use 'No comments' if not found."""
@@ -73,24 +100,11 @@ def get_comments(page_content):
             comments = comments_tag.text.strip().replace('Comments: ', '')
         else:
             comments = 'Comments:\n No comments'
-        
         lines_comments.append(comments)   
+
     return lines_comments
 
-def set_filename(report_path, topic):
-    """Create a filename to save the filtered papers."""
-    date = datetime.datetime.now().strftime("%Y-%m-%d-%a")
-    date_time = datetime.datetime.now().strftime("%Y-%m-%d-%a_%H:%M:%S")
-    os.makedirs(f"{report_path}", exist_ok=True)
-    filename = os.path.join(report_path, f"{topic}_new_{date}.html")
-    if os.path.exists(filename):
-        print(f"\n\tWarning: File exists", colored(f"{filename.split('/')[-1]}", "yellow"))
-        temp_filename = os.path.join(report_path, f"{topic}_new_{date_time}.html")
-    else:
-        temp_filename = filename
-    return filename, temp_filename, date
-
-def write_html(filename, date, all_keywords, major_keyword, lines_titles, lines_abstracts, lines_authors, lines_subjects, lines_refs, lines_comments):
+def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_abstracts, lines_authors, lines_subjects, lines_refs, lines_comments):
     """Filter the papers by keywords and save as an HTML file."""
     with open(filename, 'w') as f:
         # Write a header to render LaTeX equations
@@ -137,25 +151,11 @@ def write_html(filename, date, all_keywords, major_keyword, lines_titles, lines_
         f.write(f"<p>Total of {match_count-1}/{len(lines_abstracts)} papers.</p>\n")
         f.write(f"<br><br>\n")
         f.write("</body></html>\n") 
-    print(f"\n\tFiltering completed.")
-
-def check_duplications(filename, temp_filename):
-    """Check if the filtered papers already exist."""
-    if filename == temp_filename:
-        print(f"\tNew papers found. Saving as", colored(f"{filename.split('/')[-1]}\n", 'magenta'))
-    else:
-        with open(filename, 'r') as f1, open(temp_filename, 'r') as f2:
-            if f1.read() == f2.read():
-                print(colored(f"\tWarning: No new papers found.\n", "yellow"))
-                os.remove(temp_filename)
-            else:
-                print(f"\tNew papers found. Saving as", colored(f"{temp_filename.split('/')[-1]}\n", 'magenta'))
+    print(f"\tFiltering completed. Have a nice day!\n")
 
 def main():
-    paper_info = filter_papers(link)
-    filename, temp_filename, date = set_filename(report_path, topic)
-    write_html(temp_filename, date, all_keywords, major_keyword, *paper_info)
-    check_duplications(filename, temp_filename)
+    report_info = filter_papers(link, report_path, topic)
+    write_html(all_keywords, major_keyword, *report_info)
 
 if __name__ == '__main__':
     main()
