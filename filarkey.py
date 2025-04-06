@@ -14,7 +14,7 @@ link = "https://arxiv.org/list/astro-ph/new"
 base_path = '/home/xliu/work'
 topic = link.split('/')[-2]
 report_path = os.path.join(base_path, topic) 
-print("\n\tFiltering papers in latest arXiv releases")
+print("\n\tFilarkey: Filtering latest arXiv papers by keywords and topics")
 print(f"\n\tDefault report repository:", colored(f"{report_path}", "blue"))
 
 # Define keywords. 
@@ -27,7 +27,7 @@ all_keywords = major_keyword + major_keywords + minor_keywords + short_keywords
 
 def filter_papers(link, report_path, topic):
     """Access the website and extract paper information."""
-    print(f"\n\tAccessing", colored(f"{link}", 'blue'))
+    print(f"\tAccessing", colored(f"{link}", 'blue'))
     page = requests.get(link)
     soup = BeautifulSoup(page.content, 'html.parser')
 
@@ -50,7 +50,7 @@ def filter_papers(link, report_path, topic):
 
     lines_comments = get_comments(soup)
 
-    print(f"\tPapers extracted.")
+    print(f"\tData extracted")
     return date_str, file_name, lines_titles, lines_abstracts, lines_authors, lines_subjects, lines_refs, lines_comments
 
 def get_posting_date(page_content):
@@ -66,10 +66,11 @@ def set_filename(report_path, topic, date_str):
     os.makedirs(f"{report_path}", exist_ok=True)
     filename = os.path.join(report_path, f"{topic}_new_{formatted_date}.html")
     if os.path.exists(filename):
-        print(colored(f"\n\tWarning: Reports up to date. Latest release at {formatted_date}.\n", "yellow"))
+        print(colored(f"\n\tWarning: Reports up to date. Latest release at {formatted_date}", "yellow"))
+        print('\tHave a nice day!\n')
         sys.exit()
     else:
-        print(f"\n\tNew papers found.")
+        print(f"\n\tNew papers found")
         print("\tSaving reports to", colored(f"{filename.split('/')[-1]}\n", "magenta"))
         return filename
 
@@ -151,7 +152,8 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
         f.write(f"<p>Total of {match_count-1}/{len(lines_abstracts)} papers.</p>\n")
         f.write(f"<br><br>\n")
         f.write("</body></html>\n") 
-    print(f"\tFiltering completed. Have a nice day!\n")
+    print("\tPapers filtered")
+    print("\n\tHave a nice day!\n")
 
 def main():
     report_info = filter_papers(link, report_path, topic)
