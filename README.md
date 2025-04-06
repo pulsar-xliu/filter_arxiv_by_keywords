@@ -13,7 +13,7 @@ Notable feautures include
 ### Usage
 After downloading the script,
 
-1. Set topic (`line 10`), report path (`line 13`) and keywords (`lines 19-22`).
+1. Set topic (`line 11`), report path (`line 14`) and keywords (`lines 22-25`).
 2. Run the script in a terminal as below: ```python filarkey.py```
 3. Results are saved in `report_path/topic/date.html`. Open with web browser.
 
