@@ -21,7 +21,7 @@ print(f"\n\tDefault report repository:", colored(f"{report_path}", "blue"))
 # Use all_keywords for filtering. Report major_keyword only.
 major_keyword  = ["pulsar", "neutron star", "black hole", "magnetar", "fast radio burst", "gravitational wave", "radio telescope"]
 major_keywords = ["pulsars", "neutron stars", "black holes", "magnetars", "fast radio bursts", "gravitational waves", "radio telescopes"]
-minor_keywords = ["large language model", "machine learning", "deep learning", "X-ray binary", "globular cluster"]
+minor_keywords = ["large language model", "machine learning", "deep learning", "X-ray binary", "globular cluster", "open cluster"]
 short_keywords = ["MeerKAT", "SKA", "LMXB", "NS", "BH", "GW", "FRB"]
 all_keywords = major_keyword + major_keywords + minor_keywords + short_keywords
 
@@ -107,16 +107,22 @@ def get_comments(page_content):
 
 def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_abstracts, lines_authors, lines_subjects, lines_refs, lines_comments):
     """Filter the papers by keywords and save as an HTML file."""
+    count_match = 1
+    for i in range(len(lines_abstracts)):
+        if any(word in lines_abstracts[i] for word in all_keywords):
+            count_match += 1
+    
     with open(filename, 'w') as f:
         # Write a header to render LaTeX equations
         f.write("<html><head>\n")
         f.write(f"<h3>Selected new papers on arXiv Astro-ph, {date}</h3>\n")
-        f.write(f"<p>Retrived with keywords: <span style='color: Chocolate;'>{', '.join(major_keyword)}</span></p>\n")
+        f.write(f"<p>Using keywords: <span style='color: Chocolate;'>{', '.join(major_keyword)}</span></p>\n")
+        f.write(f"<p>Retrived <span style='color: Chocolate;'>{count_match-1}</span> out of {len(lines_abstracts)} papers.</p>\n")
         f.write("<script>MathJax = {tex: {inlineMath: [['$', '$'],['$$', '$$']]}}</script>")
         f.write('<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>')
         f.write("</head><body>\n")
 
-        match_count = 1
+        count_paper = 1
         for i in range(len(lines_abstracts)):
             if any(word in lines_abstracts[i] for word in all_keywords):
                 title = lines_titles[i].encode('ascii', 'ignore').decode('ascii')
@@ -135,7 +141,7 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
                 other_subjects = '; '.join(subjects_list[1:]).strip() if len(subjects_list) > 1 else ''
                 
                 # Write the information of the matched papers
-                f.write(f"<strong>[{match_count}] <a href='{html_url}' style='text-decoration: none;'>arXiv:{ref.split('/')[-1]}</a> [<a href='{html_url}' style='text-decoration: none;'>html</a></strong>, <strong><a href='{pdf_url}' style='text-decoration: none;'>pdf</a>]</strong><br>")
+                f.write(f"<strong>[{count_paper}] <a href='{html_url}' style='text-decoration: none;'>arXiv:{ref.split('/')[-1]}</a> [<a href='{html_url}' style='text-decoration: none;'>html</a></strong>, <strong><a href='{pdf_url}' style='text-decoration: none;'>pdf</a>]</strong><br>")
                 f.write(f"<strong style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 1.4em;'>{title_clean}</strong>\n")
                 f.write(f"<span style='padding-left: 40px; display: block; color: blue; word-wrap: break-word;'>{author}</span>\n")
                 f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word;'>{comments}</span>\n")
@@ -147,12 +153,11 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
                     f.write("</span>\n")
 
                 f.write(f"<p style='padding-left: 40px;'>{abstract}</p>\n")
-                f.write(f"<br>\n")
-                match_count += 1
-        f.write(f"<p>Total of {match_count-1}/{len(lines_abstracts)} papers.</p>\n")
-        f.write(f"<br><br>\n")
+                count_paper += 1
+        f.write("<p>End of selected papers.</p>\n")
+        f.write(f"<br>\n")
         f.write("</body></html>\n") 
-    print("\tPapers filtered")
+    print(f"\tRetrived {count_match-1} out of {len(lines_abstracts)} papers.")
     print("\n\tHave a nice day!\n")
 
 def main():
