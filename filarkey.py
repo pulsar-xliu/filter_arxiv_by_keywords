@@ -115,6 +115,8 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
     with open(filename, 'w') as f:
         # Write a header to render LaTeX equations
         f.write("<html><head>\n")
+        f.write(f"<title>Filarkey</title>")
+        f.write(f"<link rel='icon' type='image/x-icon' href='/Users/xiaodu/Desktop/astro-ph'>\n")
         f.write(f"<h3>Selected new papers on arXiv Astro-ph, {date}</h3>\n")
         f.write(f"<p>Using keywords: <span style='color: Chocolate;'>{', '.join(major_keyword)}</span></p>\n")
         f.write(f"<p>Retrived <span style='color: Chocolate;'>{count_match-1}</span> out of {len(lines_abstracts)} papers.</p>\n")
@@ -147,15 +149,15 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
                 f.write(f"[{count_paper}] <a href='{html_url}' style='text-decoration: none;'>arXiv:{ref.split('/')[-1]}</a> [<a href='{html_url}' style='text-decoration: none;'>html</a>, <a href='{pdf_url}' style='text-decoration: none;'>pdf</a>]<br>")
                 f.write(f"<strong style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 1.4em;'>{title_clean}</strong>\n")
                 f.write(f"<span style='padding-left: 40px; display: block; color: blue; word-wrap: break-word;'>{author}</span>\n")
-                f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word;'>{comments}</span>\n")
+                f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 0.9em;'>{comments}</span>\n")
                 
                 if first_subject:
-                    f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word;'>Subject: <strong>{first_subject}</strong>")
+                    f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 0.9em;'>Subject: <strong>{first_subject}</strong>")
                     if other_subjects:
                         f.write(f"; {other_subjects}")
                     f.write("</span>\n")
 
-                f.write(f"<p style='padding-left: 40px;'>{abstract}</p>\n")
+                f.write(f"<p style='padding-left: 40px; font-size: 0.9em;'>{abstract}</p>\n")
                 count_paper += 1
         f.write("<p>End of selected papers.</p>\n")
         f.write(f"<br>\n")
