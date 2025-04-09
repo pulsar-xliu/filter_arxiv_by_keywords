@@ -2,6 +2,7 @@
 
 import os
 import sys
+import shutil
 import datetime
 import requests
 from termcolor import colored
@@ -12,7 +13,6 @@ link = "https://arxiv.org/list/astro-ph/new"
 
 # Set report and logo path
 base_path = '/home/xliu/work'
-logo_path = '/Users/xiaodu/Desktop/astro-ph/logo.png'
 topic = link.split('/')[-2]
 report_path = os.path.join(base_path, topic) 
 print("\n\tFilarkey: Filtering latest arXiv papers by keywords and topics")
@@ -65,6 +65,7 @@ def set_filename(report_path, topic, date_str):
     date_obj = datetime.datetime.strptime(date_str, '%A, %d %B %Y')
     formatted_date = date_obj.strftime('%Y-%m-%d-') + date_obj.strftime('%a')
     os.makedirs(f"{report_path}", exist_ok=True)
+    shutil.copy(f"{os.getcwd()}/logo.png", f"{report_path}/logo.png")
     filename = os.path.join(report_path, f"{topic}_new_{formatted_date}.html")
     if os.path.exists(filename):
         print(colored(f"\n\tWarning: Reports up to date. Latest release at {formatted_date}", "yellow"))
@@ -117,7 +118,7 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
         # Write a header to render LaTeX equations
         f.write("<html><head>\n")
         f.write(f"<title>Filarkey: New arXiv papers</title>")
-        f.write(f"<link rel='icon' type='image/png' sizes=\"32x32\" href={logo_path}>\n")
+        f.write(f"<link rel='icon' type='image/png' sizes=\"32x32\" href={os.getcwd()/logo.png}>\n")
         f.write(f"<h3>Selected new papers on arXiv Astro-ph, {date}</h3>\n")
         f.write(f"<p>Using keywords: <span style='color: Chocolate;'>{', '.join(major_keyword)}</span></p>\n")
         f.write(f"<p>Retrived <span style='color: Chocolate;'>{count_match-1}</span> out of {len(lines_abstracts)} papers.</p>\n")
