@@ -10,8 +10,9 @@ from bs4 import BeautifulSoup
 # Define website to be read 
 link = "https://arxiv.org/list/astro-ph/new"
 
-# Set report path
+# Set report and logo path
 base_path = '/home/xliu/work'
+logo_path = '/Users/xiaodu/Desktop/astro-ph/logo.png'
 topic = link.split('/')[-2]
 report_path = os.path.join(base_path, topic) 
 print("\n\tFilarkey: Filtering latest arXiv papers by keywords and topics")
@@ -115,8 +116,8 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
     with open(filename, 'w') as f:
         # Write a header to render LaTeX equations
         f.write("<html><head>\n")
-        f.write(f"<title>Filarkey</title>")
-        f.write(f"<link rel='icon' type='image/x-icon' href='/Users/xiaodu/Desktop/astro-ph'>\n")
+        f.write(f"<title>Filarkey: New arXiv papers</title>")
+        f.write(f"<link rel='icon' type='image/png' sizes=\"32x32\" href={logo_path}>\n")
         f.write(f"<h3>Selected new papers on arXiv Astro-ph, {date}</h3>\n")
         f.write(f"<p>Using keywords: <span style='color: Chocolate;'>{', '.join(major_keyword)}</span></p>\n")
         f.write(f"<p>Retrived <span style='color: Chocolate;'>{count_match-1}</span> out of {len(lines_abstracts)} papers.</p>\n")
