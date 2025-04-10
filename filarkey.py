@@ -115,11 +115,13 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
     with open(filename, 'w') as f:
         # Write a header to render LaTeX equations
         f.write("<html><head>\n")
+        f.write(f"<title>Filarkey: New arXiv papers</title>")
         f.write(f"<h3>Selected new papers on arXiv Astro-ph, {date}</h3>\n")
         f.write(f"<p>Using keywords: <span style='color: Chocolate;'>{', '.join(major_keyword)}</span></p>\n")
         f.write(f"<p>Retrived <span style='color: Chocolate;'>{count_match-1}</span> out of {len(lines_abstracts)} papers.</p>\n")
         f.write("<script>MathJax = {tex: {inlineMath: [['$', '$'],['$$', '$$']]}}</script>")
         f.write('<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>')
+        f.write("<style>body {font-family: font-family: 'Lucida Grande', helvetica, arial, verdana, sans-serif;}</style>\n")
         f.write("</head><body>\n")
 
         count_paper = 1
@@ -141,13 +143,13 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
                 other_subjects = '; '.join(subjects_list[1:]).strip() if len(subjects_list) > 1 else ''
                 
                 # Write the information of the matched papers
-                f.write(f"<strong>[{count_paper}] <a href='{html_url}' style='text-decoration: none;'>arXiv:{ref.split('/')[-1]}</a> [<a href='{html_url}' style='text-decoration: none;'>html</a></strong>, <strong><a href='{pdf_url}' style='text-decoration: none;'>pdf</a>]</strong><br>")
+                f.write(f"[{count_paper}] <a href='{html_url}' style='text-decoration: none;'>arXiv:{ref.split('/')[-1]}</a> [<a href='{html_url}' style='text-decoration: none;'>html</a>, <a href='{pdf_url}' style='text-decoration: none;'>pdf</a>]<br>")
                 f.write(f"<strong style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 1.4em;'>{title_clean}</strong>\n")
                 f.write(f"<span style='padding-left: 40px; display: block; color: blue; word-wrap: break-word;'>{author}</span>\n")
-                f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word;'>{comments}</span>\n")
+                f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 0.9em;'>{comments}</span>\n")
                 
                 if first_subject:
-                    f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word;'>Subject: <strong>{first_subject}</strong>")
+                    f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 0.9em;'>Subject: <strong>{first_subject}</strong>")
                     if other_subjects:
                         f.write(f"; {other_subjects}")
                     f.write("</span>\n")
