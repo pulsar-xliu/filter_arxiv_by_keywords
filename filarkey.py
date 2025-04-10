@@ -121,6 +121,8 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
         f.write(f"<p>Retrived <span style='color: Chocolate;'>{count_match-1}</span> out of {len(lines_abstracts)} papers.</p>\n")
         f.write("<script>MathJax = {tex: {inlineMath: [['$', '$'],['$$', '$$']]}}</script>")
         f.write('<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>')
+
+        # Add CSS for font family
         f.write("<style>body {font-family: font-family: 'Lucida Grande', helvetica, arial, verdana, sans-serif;}</style>\n")
         f.write("</head><body>\n")
 
