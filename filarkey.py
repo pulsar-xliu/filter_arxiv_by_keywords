@@ -151,7 +151,7 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
                 f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 0.9em;'>{comments}</span>\n")
                 
                 if first_subject:
-                    f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 0.9em;'>Subject: <strong>{first_subject}</strong>")
+                    f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 0.9em;'>Subjects: <strong>{first_subject}</strong>")
                     if other_subjects:
                         f.write(f"; {other_subjects}")
                     f.write("</span>\n")
