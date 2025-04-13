@@ -23,7 +23,6 @@ After downloading the script,
 ```
 
 ### Sample output
-<!-- ![Effects of the script](https://github.com/pulsar-xliu/filter_arxiv_by_keywords/blob/main/example.png =250x) -->
 <img src="https://github.com/pulsar-xliu/filter_arxiv_by_keywords/blob/main/example.png" width="600px" />
 
 ### Reference
