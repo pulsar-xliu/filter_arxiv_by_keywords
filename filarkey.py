@@ -139,6 +139,7 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
                 ref = lines_refs[i].encode('ascii', 'ignore').decode('ascii').replace('arXiv:', 'abs/')
 
                 title_clean = title.split('Title:')[-1].strip()
+                title_clean_padded = title_clean.replace('<', ' < ').replace('>', ' < ')
                 html_url = 'https://arxiv.org/' + ref.strip()
                 pdf_url = html_url.replace('abs', 'pdf')
                 
@@ -148,7 +149,7 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
                 
                 # Write the information of the matched papers
                 f.write(f"[{count_paper}] <a href='{html_url}' style='text-decoration: none;'>arXiv:{ref.split('/')[-1]}</a> [<a href='{html_url}' style='text-decoration: none;'>html</a>, <a href='{pdf_url}' style='text-decoration: none;'>pdf</a>]<br>")
-                f.write(f"<strong style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 1.4em;'>{title_clean}</strong>\n")
+                f.write(f"<strong style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 1.4em;'>{title_clean_padded}</strong>\n")
                 f.write(f"<span style='padding-left: 40px; display: block; color: blue; word-wrap: break-word;'>{author}</span>\n")
                 f.write(f"<span style='padding-left: 40px; display: block; word-wrap: break-word; font-size: 0.9em;'>{comments}</span>\n")
                 
@@ -158,7 +159,9 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
                         f.write(f"; {other_subjects}")
                     f.write("</span>\n")
 
-                f.write(f"<p style='padding-left: 40px;'>{abstract}</p>\n")
+                # pad '<' and '>' to abstract to avoid HTML errors
+                abstract_padded = abstract.replace('<', ' < ').replace('>', ' > ')
+                f.write(f"<p style='padding-left: 40px;'>{abstract_padded}</p>\n")
                 count_paper += 1
         f.write("<p>End of selected papers.</p>\n")
         f.write(f"<br>\n")
