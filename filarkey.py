@@ -131,7 +131,7 @@ def write_html(all_keywords, major_keyword, date, filename, lines_titles, lines_
         count_paper = 1
         for i in range(len(lines_abstracts)):
             if any(word in lines_abstracts[i] for word in all_keywords):
-                title = lines_titles[i].encode('ascii', 'ignore').decode('ascii')
+                title = lines_titles[i]
                 author = lines_authors[i].encode('ascii', 'ignore').decode('ascii')
                 abstract = lines_abstracts[i].encode('ascii', 'ignore').decode('ascii')
                 comments = lines_comments[i].encode('ascii', 'ignore').decode('ascii')
